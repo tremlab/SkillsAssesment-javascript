@@ -76,14 +76,14 @@
 <script>
   "use strict";
 
-  function preventSubmit(event) {
+  function stopSubmit(event) {
     event.preventDefault();
     alert("just kidding!!!  :P ");
   }
 
   var formButton = document.getElementById("prevent-form-submission-button");
 
-  formButton.addEventListener("click", preventSubmit);
+  formButton.addEventListener("click", stopSubmit);
 
 </script>
 
@@ -207,12 +207,10 @@
 
   function evalGuess(evt) {
     evt.preventDefault();
-    console.log('guess clicked!!!');
 
     var guess = parseInt(userGuessInput.val());
-    console.log(guess);
-    console.log(winNum);
 
+    //compare user guess to winning number, and make changes when matched
     if (guess === winNum) {
       guessMsg.html("ZOMG!! Correct!!!!!");
       playButton.removeAttr("disabled");
@@ -232,16 +230,19 @@
   }
 
   function playNumGame() {
+    // random will always include 0, so adding 1
+    winNum = 1 + Math.floor(Math.random() * 99);
 
-    winNum = Math.floor(Math.random() * 100);
-    console.log("play clciked! " + winNum);
+    //for troubleshooting - print to console
+    console.log("play clicked! " + winNum);
 
+    //reformatting the form while playing
     playButton.attr("disabled", "disabled"); 
     guessButton.removeAttr("disabled");
     userGuessInput.removeAttr("disabled");
-
     guessMsg.html("pick a number between 1 and 100!");
 
+    //with each guess, evaluating input
     guessButton.on('click', evalGuess);
 
   }
